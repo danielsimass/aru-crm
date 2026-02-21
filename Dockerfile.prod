@@ -34,4 +34,4 @@
     
     EXPOSE 3000
     
-    CMD ["dumb-init", "sh", "-c", "pnpm run migration:run && node dist/main.js"]
+    CMD ["dumb-init", "sh", "-c", "pnpm run migration:prod && node dist/main.js"]

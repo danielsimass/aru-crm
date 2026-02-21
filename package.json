@@ -21,7 +21,8 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:generate": "pnpm exec typeorm-ts-node-commonjs migration:generate -d src/modules/database/typeorm/typeorm-data-source.ts",
     "migration:run": "pnpm exec typeorm-ts-node-commonjs migration:run -d src/modules/database/typeorm/typeorm-data-source.ts",
-    "migration:revert": "pnpm exec typeorm-ts-node-commonjs migration:revert -d src/modules/database/typeorm/typeorm-data-source.ts"
+    "migration:revert": "pnpm exec typeorm-ts-node-commonjs migration:revert -d src/modules/database/typeorm/typeorm-data-source.ts",
+    "migration:prod": "pnpm exec typeorm-ts-node-commonjs migration:run -d dist/modules/database/typeorm/typeorm-data-source.js"
   },
   "dependencies": {
     "@nestjs/config": "^4.0.0",
