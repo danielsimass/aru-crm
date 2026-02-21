@@ -1,5 +1,9 @@
 # ARU CRM – Backend
 
+<div align="center">
+  <img src="assets/logo.png" alt="ARU CRM" width="280">
+</div>
+
 Backend da aplicação **ARU CRM**, voltada para um projeto de **basquete** e iniciativas **sociais** — gestão de atletas, usuários, autenticação e comunicação (e-mails, fila de jobs). Este repositório contém a API REST que serve o frontend e integra com banco de dados e serviços externos.
 
 **Stack:** NestJS, TypeORM, PostgreSQL.
