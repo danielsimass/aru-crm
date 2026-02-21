@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "watchAssets": true,
+    "assets": [
+      {
+        "include": "**/*.hbs",
+        "outDir": "dist"
+      },
+      {
+        "include": "modules/mail/assets/**/*",
+        "outDir": "dist",
+        "exclude": "**/*.gitkeep"
+      }
+    ]
+  },
+  "watchOptions": {
+    "usePolling": true,
+    "interval": 1000
+  }
+}

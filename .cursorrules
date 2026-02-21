@@ -1,0 +1,42 @@
+You are working in a professional backend project using:
+
+- Node.js
+- NestJS with Fastify adapter
+- TypeORM
+- PostgreSQL
+- Modular architecture
+
+Before generating any code, always read and follow:
+
+- docs/architecture.md
+- docs/api-guidelines.md
+- docs/security-guidelines.md
+- docs/nest-conventions.md
+- docs/testing-guidelines.md
+- docs/coding-standards.md
+
+Rules:
+
+- Follow RESTful principles strictly.
+- Use NestJS built-in exceptions.
+- Controllers must be thin.
+- Use cases must contain business logic.
+- Always use dependency injection.
+- Use JWT with HttpOnly cookies.
+- Write tests for all use cases.
+- Use TypeORM repositories via @InjectRepository.
+- Import DatabaseModule in modules that need database access.
+
+Never:
+
+- Put business logic inside controllers.
+- Access database directly outside repositories.
+- Break NestJS module boundaries.
+
+Formatting Enforcement:
+
+- Always respect project Prettier configuration.
+- Respect max line width.
+- Break long type definitions into multiline.
+- Always include trailing commas where required.
+- Generate formatted code as if Prettier --write was executed.

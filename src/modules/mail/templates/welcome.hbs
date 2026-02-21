@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bem-vindo ao ARU CRM</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #0f172a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0f172a; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width: 600px; background-color: #1e293b; border-radius: 8px; overflow: hidden;">
+          
+          <!-- Logo -->
+          <tr>
+            <td style="padding: 40px 40px 20px; text-align: center;">
+              <img src="cid:logo" width="180" alt="ARU CRM Logo" style="max-width: 180px; height: auto; display: block; margin: 0 auto;">
+            </td>
+          </tr>
+          
+          <!-- Title -->
+          <tr>
+            <td style="padding: 0 40px 30px;">
+              <h1 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 700; text-align: center; line-height: 1.3;">Bem-vindo ao ARU CRM</h1>
+            </td>
+          </tr>
+          
+          <!-- Content -->
+          <tr>
+            <td style="padding: 0 40px 40px;">
+              <p style="margin: 0 0 16px; color: #e2e8f0; font-size: 16px; line-height: 1.6;">
+                Olá, <strong style="color: #ffffff;">{{name}}</strong>!
+              </p>
+              
+              <p style="margin: 0 0 16px; color: #cbd5e1; font-size: 16px; line-height: 1.6;">
+                Você foi convidado a acessar o sistema ARU CRM. Para criar sua senha e fazer o primeiro acesso, utilize os dados abaixo:
+              </p>
+              
+              {{#if username}}
+              <!-- Usuário e código -->
+              <div style="margin: 0 0 24px; padding: 20px; background-color: #0f172a; border-radius: 8px;">
+                <p style="margin: 0 0 8px; color: #94a3b8; font-size: 14px;">Seu usuário de acesso:</p>
+                <p style="margin: 0 0 16px; color: #ffffff; font-size: 18px; font-weight: 600;">{{username}}</p>
+                {{#if secureCode}}
+                <p style="margin: 0 0 8px; color: #94a3b8; font-size: 14px;">Seu código de verificação:</p>
+                <p style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: 6px;">{{secureCode}}</p>
+                {{/if}}
+              </div>
+              {{/if}}
+              
+              <p style="margin: 0 0 24px; color: #94a3b8; font-size: 14px; line-height: 1.6;">
+                Acesse o link abaixo para criar sua senha:
+              </p>
+              
+              <!-- CTA Button (firstLoginUrl = /first-login?userId=...&secureCode=... | fallback setPasswordUrl para teste) -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0 0 32px;">
+                <tr>
+                  <td align="center">
+                    {{#if firstLoginUrl}}
+                    <a href="{{firstLoginUrl}}" style="display: inline-block; background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-weight: 600; font-size: 16px;">Criar senha e acessar</a>
+                    {{else}}
+                    <a href="{{setPasswordUrl}}" style="display: inline-block; background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-weight: 600; font-size: 16px;">Criar senha e acessar</a>
+                    {{/if}}
+                  </td>
+                </tr>
+              </table>
+              
+              <!-- Alternative Link -->
+              <p style="margin: 0 0 24px; color: #94a3b8; font-size: 14px; line-height: 1.6;">
+                Ou copie e cole este link no seu navegador:<br>
+                {{#if firstLoginUrl}}
+                <a href="{{firstLoginUrl}}" style="color: #60a5fa; text-decoration: underline; word-break: break-all;">{{firstLoginUrl}}</a>
+                {{else}}
+                <a href="{{setPasswordUrl}}" style="color: #60a5fa; text-decoration: underline; word-break: break-all;">{{setPasswordUrl}}</a>
+                {{/if}}
+              </p>
+              
+              <!-- Security Notice -->
+              <div style="margin: 32px 0; padding: 16px; background-color: #0f172a; border-left: 4px solid #f59e0b; border-radius: 4px;">
+                <p style="margin: 0 0 12px; color: #fbbf24; font-size: 14px; font-weight: 600;">
+                  Se você não solicitou este convite:
+                </p>
+                <ul style="margin: 0; padding-left: 20px; color: #cbd5e1; font-size: 14px; line-height: 1.8;">
+                  <li style="margin-bottom: 8px;">Ignore este e-mail.</li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 30px 40px; border-top: 1px solid #334155; text-align: center;">
+              <p style="margin: 0; color: #64748b; font-size: 12px; line-height: 1.5;">
+                ARU CRM - Sistema de Gestão de Atletas
+              </p>
+            </td>
+          </tr>
+          
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+
