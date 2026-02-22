@@ -23,14 +23,14 @@ async function bootstrap() {
       transform: true,
     }),
   );
-
-  const corsOrigin = process.env.FRONTEND_URL
-    ? [process.env.FRONTEND_URL]
-    : ['http://localhost:3001'];
-  app.enableCors({
-    origin: corsOrigin,
-    credentials: true,
-  });
+  console.log('FRONTEND_URL', process.env.FRONTEND_URL);
+  // const corsOrigin = process.env.FRONTEND_URL
+  //   ? [process.env.FRONTEND_URL]
+  //   : ['http://localhost:3001'];
+  // app.enableCors({
+  //   origin: corsOrigin,
+  //   credentials: true,
+  // });
 
   const config = new DocumentBuilder()
     .setTitle('API Documentation')
