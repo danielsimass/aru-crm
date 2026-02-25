@@ -56,7 +56,10 @@ export class AthletesService {
     return digits.length === 11 ? digits : null;
   }
 
-  async create(createAthleteDto: CreateAthleteDto): Promise<Athlete> {
+  async create(
+    createAthleteDto: CreateAthleteDto,
+    photoPath?: string,
+  ): Promise<Athlete> {
     const cpfNormalized = this.normalizeCpf(createAthleteDto.cpf);
     if (cpfNormalized) {
       const existing = await this.athletesRepository.findByCpf(cpfNormalized);
@@ -92,6 +95,7 @@ export class AthletesService {
       weightKg: createAthleteDto.weightKg ?? null,
       dominantHand: createAthleteDto.dominantHand ?? null,
       notes: createAthleteDto.notes ?? null,
+      photo: photoPath ?? null,
     });
 
     return this.athletesRepository.save(athlete);
@@ -125,6 +129,7 @@ export class AthletesService {
   async update(
     id: string,
     updateAthleteDto: UpdateAthleteDto,
+    photoPath?: string,
   ): Promise<Athlete> {
     const athlete = await this.findOne(id);
 
@@ -162,6 +167,7 @@ export class AthletesService {
       athlete.dominantHand = updateAthleteDto.dominantHand ?? null;
     if (updateAthleteDto.notes !== undefined)
       athlete.notes = updateAthleteDto.notes ?? null;
+    if (photoPath !== undefined) athlete.photo = photoPath ?? null;
 
     return this.athletesRepository.save(athlete);
   }

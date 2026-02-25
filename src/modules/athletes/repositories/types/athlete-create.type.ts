@@ -14,4 +14,5 @@ export interface AthleteCreateData {
   weightKg?: number | null;
   dominantHand?: DominantHand | null;
   notes?: string | null;
+  photo?: string | null;
 }
