@@ -5,6 +5,7 @@ import { apiReference } from '@scalar/nestjs-api-reference';
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
+import express from 'express';
 
 // Enable jobs worker when --worker flag is passed (e.g. node dist/main --worker)
 if (process.argv.includes('--worker')) {
@@ -14,8 +15,15 @@ if (process.argv.includes('--worker')) {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use(helmet());
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: {
+        policy: 'cross-origin',
+      },
+    }),
+  );
   app.use(cookieParser());
+  app.use('/uploads', express.static('/uploads'));
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
