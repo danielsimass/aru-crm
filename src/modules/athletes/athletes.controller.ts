@@ -11,18 +11,24 @@ import {
   ParseUUIDPipe,
   Query,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiTags,
   ApiOperation,
   ApiResponse,
   ApiBearerAuth,
+  ApiConsumes,
+  ApiBody,
 } from '@nestjs/swagger';
 import { AthletesService } from './athletes.service';
 import { CreateAthleteDto } from './dto/create-athlete.dto';
 import { UpdateAthleteDto } from './dto/update-athlete.dto';
 import { FilterAthletesDto } from './dto/filter-athletes.dto';
 import { Athlete } from './entities/athlete.entity';
+import { athletePhotoMulterOptions } from './config/athlete-photo-multer.config';
 import { RoleType } from '../users/enums/role.enum';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -40,14 +46,41 @@ export class AthletesController {
 
   @Post()
   @Roles(RoleType.ADMIN)
+  @UseInterceptors(FileInterceptor('photo', athletePhotoMulterOptions))
   @ApiOperation({ summary: 'Create a new athlete' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        photo: { type: 'string', format: 'binary' },
+        fullName: { type: 'string' },
+        birthDate: { type: 'string', format: 'date' },
+        phone: { type: 'string' },
+        guardianName: { type: 'string' },
+        guardianPhone: { type: 'string' },
+        isActive: { type: 'boolean' },
+        email: { type: 'string' },
+        cpf: { type: 'string' },
+        heightCm: { type: 'number' },
+        weightKg: { type: 'number' },
+        dominantHand: { type: 'string', enum: ['left', 'right'] },
+        notes: { type: 'string' },
+      },
+    },
+  })
   @ApiResponse({ status: 201, description: 'Athlete created successfully' })
   @ApiResponse({ status: 409, description: 'CPF already registered' })
   @ApiResponse({ status: 403, description: 'Access denied - admin only' })
   async create(
     @Body() createAthleteDto: CreateAthleteDto,
+    @UploadedFile() file?: Express.Multer.File,
   ): Promise<AthleteWithCategory> {
-    const athlete = await this.athletesService.create(createAthleteDto);
+    const photoPath = file ? `/uploads/athletes/${file.filename}` : undefined;
+    const athlete = await this.athletesService.create(
+      createAthleteDto,
+      photoPath,
+    );
     return this.toResponse(athlete);
   }
 
@@ -109,7 +142,29 @@ export class AthletesController {
 
   @Patch(':id')
   @Roles(RoleType.ADMIN)
+  @UseInterceptors(FileInterceptor('photo', athletePhotoMulterOptions))
   @ApiOperation({ summary: 'Update an athlete' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        photo: { type: 'string', format: 'binary' },
+        fullName: { type: 'string' },
+        birthDate: { type: 'string', format: 'date' },
+        phone: { type: 'string' },
+        guardianName: { type: 'string' },
+        guardianPhone: { type: 'string' },
+        isActive: { type: 'boolean' },
+        email: { type: 'string' },
+        cpf: { type: 'string' },
+        heightCm: { type: 'number' },
+        weightKg: { type: 'number' },
+        dominantHand: { type: 'string', enum: ['left', 'right'] },
+        notes: { type: 'string' },
+      },
+    },
+  })
   @ApiResponse({ status: 200, description: 'Athlete updated' })
   @ApiResponse({ status: 404, description: 'Athlete not found' })
   @ApiResponse({ status: 409, description: 'CPF already registered' })
@@ -117,8 +172,14 @@ export class AthletesController {
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateAthleteDto: UpdateAthleteDto,
+    @UploadedFile() file?: Express.Multer.File,
   ): Promise<AthleteWithCategory> {
-    const athlete = await this.athletesService.update(id, updateAthleteDto);
+    const photoPath = file ? `/uploads/athletes/${file.filename}` : undefined;
+    const athlete = await this.athletesService.update(
+      id,
+      updateAthleteDto,
+      photoPath,
+    );
     return this.toResponse(athlete);
   }
 
