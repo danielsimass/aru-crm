@@ -119,6 +119,10 @@ export class AthletesController {
     },
   })
   @ApiResponse({ status: 403, description: 'Access denied' })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request (e.g. invalid category name)',
+  })
   async findAll(
     @Query() filters: FilterAthletesDto,
   ): Promise<PaginatedAthletesWithCategory> {

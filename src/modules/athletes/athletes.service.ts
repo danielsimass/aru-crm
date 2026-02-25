@@ -1,5 +1,6 @@
 import {
   Injectable,
+  BadRequestException,
   ConflictException,
   NotFoundException,
 } from '@nestjs/common';
@@ -109,6 +110,27 @@ export class AthletesService {
       repoFilters.isActive = filters.isActive;
     if (filters?.minHeight != null) repoFilters.minHeight = filters.minHeight;
     if (filters?.maxHeight != null) repoFilters.maxHeight = filters.maxHeight;
+
+    if (filters?.category?.trim()) {
+      const refYear =
+        filters.referenceYear ?? new Date().getFullYear();
+      const categories = this.categoriesService.findAll();
+      const category = categories.find(
+        (c) => c.name.toLowerCase() === filters.category!.trim().toLowerCase(),
+      );
+      if (!category) {
+        throw new BadRequestException(
+          `Categoria inválida: "${filters.category}". Categorias válidas: ${categories.map((c) => c.name).join(', ')}`,
+        );
+      }
+      const { minAge, maxAge } = category;
+      if (maxAge !== null) {
+        repoFilters.minBirthDate = new Date(refYear - maxAge, 0, 1);
+        repoFilters.maxBirthDate = new Date(refYear - minAge, 11, 31);
+      } else {
+        repoFilters.maxBirthDate = new Date(refYear - minAge, 11, 31);
+      }
+    }
 
     const pagination: PaginationOptions = {
       page: filters?.page ?? 1,

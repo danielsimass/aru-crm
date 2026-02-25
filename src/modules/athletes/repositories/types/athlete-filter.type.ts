@@ -4,6 +4,8 @@ export interface AthleteFilter {
   isActive?: boolean;
   minHeight?: number;
   maxHeight?: number;
+  minBirthDate?: Date;
+  maxBirthDate?: Date;
 }
 
 export interface PaginationOptions {

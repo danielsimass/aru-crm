@@ -3,6 +3,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  Max,
   Min,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
@@ -47,6 +48,26 @@ export class FilterAthletesDto {
   @IsNumber()
   @Min(0)
   maxHeight?: number;
+
+  @ApiPropertyOptional({
+    example: 'Sub-14',
+    description:
+      'Filter by category name (e.g. Sub-8, Sub-10, Sub-12, Sub-14, Sub-16, Sub-18, Sub-20, Adulto, Master)',
+  })
+  @IsOptional()
+  @IsString()
+  category?: string;
+
+  @ApiPropertyOptional({
+    example: 2025,
+    description: 'Reference year for category age (default: current year)',
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(1900)
+  @Max(2100)
+  referenceYear?: number;
 
   @ApiPropertyOptional({
     example: 1,

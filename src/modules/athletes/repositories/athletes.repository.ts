@@ -66,6 +66,16 @@ export class AthletesRepository implements IAthletesRepository {
         maxHeight: filters.maxHeight,
       });
     }
+    if (filters?.minBirthDate != null) {
+      qb.andWhere('athlete.birth_date >= :minBirthDate', {
+        minBirthDate: filters.minBirthDate,
+      });
+    }
+    if (filters?.maxBirthDate != null) {
+      qb.andWhere('athlete.birth_date <= :maxBirthDate', {
+        maxBirthDate: filters.maxBirthDate,
+      });
+    }
 
     const [data, total] = await qb.skip(skip).take(limit).getManyAndCount();
 
