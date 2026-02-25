@@ -15,6 +15,7 @@ import {
   ValidateIf,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import { DominantHand } from '../enums/dominant-hand.enum';
 
 const CPF_REGEX = /^\d{11}$|^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
@@ -110,6 +111,13 @@ export class CreateAthleteDto {
     default: true,
   })
   @IsOptional()
+  @Transform(({ value }) => {
+    if (value === undefined || value === null || value === '') return undefined;
+    if (typeof value === 'boolean') return value;
+    if (value === 'true') return true;
+    if (value === 'false') return false;
+    return undefined;
+  })
   @IsBoolean()
   isActive?: boolean;
 
@@ -134,6 +142,11 @@ export class CreateAthleteDto {
 
   @ApiPropertyOptional({ example: 175, description: 'Height in cm' })
   @IsOptional()
+  @Transform(({ value }) =>
+    value === undefined || value === null || value === ''
+      ? undefined
+      : Number(value),
+  )
   @IsNumber()
   @Min(50)
   @Max(250)
@@ -141,6 +154,11 @@ export class CreateAthleteDto {
 
   @ApiPropertyOptional({ example: 70, description: 'Weight in kg' })
   @IsOptional()
+  @Transform(({ value }) =>
+    value === undefined || value === null || value === ''
+      ? undefined
+      : Number(value),
+  )
   @IsNumber()
   @Min(20)
   @Max(300)
