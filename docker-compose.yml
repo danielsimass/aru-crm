@@ -45,6 +45,6 @@ services:
       - ./nest-cli.json:/app/nest-cli.json
       # Exclude node_modules from volume mount (use container's)
       - /app/node_modules
-
+      - ./uploads:/uploads
 volumes:
   postgres_data:

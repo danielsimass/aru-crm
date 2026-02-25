@@ -150,10 +150,3 @@ constructor(
 
 - Use `@nestjs/config` for environment variables.
 - Do not access `process.env` directly in services or business logic.
-
----
-
-## Fastify Adapter
-
-- Follow NestJS Fastify documentation.
-- Avoid Express-specific patterns.

@@ -1,7 +1,7 @@
 You are working in a professional backend project using:
 
 - Node.js
-- NestJS with Fastify adapter
+- NestJS
 - TypeORM
 - PostgreSQL
 - Modular architecture
