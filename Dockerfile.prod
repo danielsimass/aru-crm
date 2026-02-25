@@ -1,5 +1,5 @@
 # ---------- BUILD STAGE ----------
-    FROM node:20-alpine AS builder
+    FROM node:24-alpine AS builder
 
     WORKDIR /app
     
@@ -13,7 +13,7 @@
     
     
     # ---------- PRODUCTION STAGE ----------
-    FROM node:20-alpine
+    FROM node:24-alpine
     
     RUN apk add --no-cache dumb-init \
         && addgroup -S nodejs -g 1001 \
@@ -31,7 +31,10 @@
     
     # Copia build
     COPY --from=builder /app/dist ./dist
-    
+    # Criar pasta de uploads e ajustar permissões
+    RUN mkdir -p /uploads \
+    && chown -R nestjs:nodejs /uploads
+
     USER nestjs
     
     EXPOSE 3000
